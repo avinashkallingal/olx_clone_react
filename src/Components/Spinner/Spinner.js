@@ -5,7 +5,7 @@ import './Spinner.css';
 function Spinner() {
     return (
         <div className="spinner-container">
-            <BallTriangle
+            <Bars
                 color="#007bff" // Customize the color
                 height={50} // Specify the height of the spinner
                 width={50} // Specify the width of the spinner

@@ -17,9 +17,20 @@ const Create = () => {
     const [image, setImage] = useState(null)
     const [spinner, setSpinner] = useState(false);
     const { user } = useContext(AuthContext);
+    const [errorProduct,setErrorProduct]=useState('')
+
+
+    const validateName=()=>{
+        if(!product){
+            setErrorProduct("name field requered")
+        }
+    }
 
     const handileSubmit = async (e) => {
         e.preventDefault();
+        if(!product||!category||!price||!image||!user){
+           setErrorProduct("field requered")
+        }else{
         setSpinner(true);
         console.log("handileSubmit clicked")
         const storage = getStorage();
@@ -51,7 +62,7 @@ const Create = () => {
         })
         console.log('2')
 
-    }
+    }}
 
     return (
 
@@ -66,7 +77,8 @@ const Create = () => {
                         <form onSubmit={handileSubmit}>
                             <label htmlFor="">Product Name</label>
                             <br />
-                            <input className='input' type="text" name="" id="" onChange={(e) => setProduct(e.target.value)} value={product} />
+                            <input onBlur={()=>{validateName()}} className='input' type="text" name="" id="" onChange={(e) => setProduct(e.target.value)} value={product} />
+                            <div style={{color:'red'}}>{errorProduct}</div>
                             <br />
                             <label htmlFor="">Category</label>
                             <br />

@@ -1,46 +1,46 @@
-import './App.css';
-import { useState, useEffect, useContext } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import "./App.css";
+import { useState, useEffect, useContext } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Home from './Pages/Home';
-import SignupPage from './Pages/Signup';
-import LoginPage from './Pages/Login'
-import Create from './Pages/Create';
-import { AuthContext, FirebaseContext } from './store/Context';
-import Post from './store/PostContext'
-import ViewPost from './Pages/ViewPost';
+import Home from "./Pages/Home";
+import SignupPage from "./Pages/Signup";
+import LoginPage from "./Pages/Login";
+import Create from "./Pages/Create";
+import { AuthContext, FirebaseContext } from "./store/Context";
+import Post from "./store/PostContext";
+import ViewPost from "./Pages/ViewPost";
+import Context from "./authentication/config";
 
 function App() {
-
   const { setUser } = useContext(AuthContext);
-  const { firebase } = useContext(FirebaseContext)
+  const { firebase } = useContext(FirebaseContext);
 
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        console.log(user)
-        // const uid = user.uid;
-        // ...
+        console.log(user);
       } else {
-        console.log('user is not logged in');
+        console.log("user is not logged in");
       }
     });
-  })
+  });
 
   return (
     <div>
       <Post>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path='/create' element={<Create />} />
-            <Route path="/Signup" element={<SignupPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/viewPost" element={<ViewPost />} />
-          </Routes>
-        </Router>
+        <Context>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/create" element={<Create />} />
+              <Route path="/Signup" element={<SignupPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/viewPost" element={<ViewPost />} />
+            </Routes>
+          </Router>
+        </Context>
       </Post>
       {/* <Spinner /> */}
     </div>

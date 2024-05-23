@@ -14,8 +14,53 @@ const Signup = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [spinner, setSpinner] = useState(false);
-    // const { firebase } = useContext(FirebaseContext)
+
+    const [nameError,setUserNameError]=useState("")
+    const [emailError,setEmailError]=useState("")
+    const [phoneError,setPhoneError]=useState("")
+    const [passwordError,setPasswordError]=useState("")
+    
     const navigate = useNavigate()
+
+    //Username validation
+    const validateUsername = () => {
+        if (username.trim() === '') {
+            setUserNameError('Username is required');
+            return false;
+        }
+        setUserNameError('');
+        return true;
+    };
+
+    //emailvalidation
+    const validateEmail = () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (email.trim() === '') {
+            setEmailError('Email is required');
+            return false;
+        } else if (!emailRegex.test(email)) {
+            setEmailError('Invalid email format');
+            return false;
+        }
+        setEmailError('');
+        return true;
+    };
+
+    //phone validation
+    const validatePhone = () => {
+        const phoneRegex = /^[0-9]{10}$/;
+        if (phone.trim() === '') {
+            setPhoneError('Phone number is required');
+            return false;
+        } else if (!phoneRegex.test(phone)) {
+            setPhoneError('Invalid phone number format');
+            return false;
+        }
+        setPhoneError('');
+        return true;
+    };
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -68,15 +113,18 @@ const Signup = () => {
                         <form onSubmit={handleSubmit}>
                             <label htmlFor="">UserName</label>
                             <br />
-                            <input onChange={(e) => setUserName(e.target.value)} className='input' type="text" name="" id="" value={username} />
+                            <input onBlur={validateUsername} onChange={(e) => {setUserName(e.target.value);setUserNameError("");validateUsername()}} className='input' type="text" name="" id="" value={username} />
+                           <div style={{color:'red',fontSize:'.9vw'}}>{nameError}</div>
                             <br />
                             <label htmlFor="">Email Address</label>
                             <br />
-                            <input onChange={(e) => setEmail(e.target.value)} value={email} className='input' type="text" name="" id="" />
+                            <input onBlur={validateEmail} onChange={(e) => {setEmail(e.target.value);validateEmail()}} value={email} className='input' type="text" name="" id="" />
+                            <div style={{color:'red',fontSize:'.9vw'}}>{emailError}</div>
                             <br />
                             <label htmlFor="">Phone Number</label>
                             <br />
-                            <input onChange={(e) => setPhone(e.target.value)} value={phone} className='input' type="number" name="" id="" />
+                            <input onChange={(e) => {setPhone(e.target.value);validatePhone()}} value={phone} className='input' type="number" name="" id="" />
+                            <div style={{color:'red',fontSize:'.9vw'}}>{phoneError}</div>
                             <br />
                             <label htmlFor="">Password</label>
                             <br />

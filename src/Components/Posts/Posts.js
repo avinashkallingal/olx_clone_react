@@ -34,7 +34,7 @@ function Posts() {
                 });
 
                 setProducts(allPost)
-                const expensive = allPost.filter((data) => data.price > 5000000);
+                const expensive = allPost.filter((data) => data.price > 500000);
                 SetexpensiveProducts(expensive)
                 console.log(products)
                 Setspinner(false)

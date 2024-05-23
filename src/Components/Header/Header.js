@@ -7,6 +7,7 @@ import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
 import { AuthContext } from '../../store/Context';
 import { getAuth, signOut } from "firebase/auth";
+import { AuthUserContext } from '../../authentication/config';
 
 
 
@@ -14,12 +15,14 @@ function Header() {
 
     const { user } = useContext(AuthContext);
     const [account, setAccount] = useState(false)
+    const {setLogged}=useContext(AuthUserContext)
 
     const navigate = useNavigate();
 
     const signout = () => {
         const auth = getAuth();
         signOut(auth).then(() => {
+            setLogged(false)
             navigate('/login')
             // Sign-out successful.
         }).catch((error) => {
